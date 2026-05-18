@@ -1,0 +1,49 @@
+# Afrolink News API
+
+A production‑ready RESTful API for a news platform where authors publish content, readers consume it, and an analytics engine tracks engagement. Built with **Node.js + TypeScript** following best practices: role‑based access control, soft deletion, read tracking with spam protection, and daily analytics aggregation via job queue.
+
+## 🚀 Live Demo (if deployed)
+> *No live deployment – run locally using the instructions below.*
+
+## 📚 Technology Stack
+
+- **Runtime**: Node.js (v18+)
+- **Language**: TypeScript
+- **Framework**: Express.js
+- **ORM**: Prisma (with PostgreSQL)
+- **Database**: PostgreSQL (Docker or local)
+- **Cache/Queue**: Redis + Bull (for rate limiting and analytics job queue)
+- **Authentication**: JWT (bcrypt for password hashing)
+- **Validation**: Zod
+- **Scheduler**: node-cron (daily analytics at 00:00 GMT)
+- **Testing**: Jest + Supertest (planned)
+- **Dev Tools**: Nodemon, ts-node
+
+## ✨ Features (User Stories Implemented)
+
+| User Story | Endpoints | Status |
+|------------|-----------|--------|
+| 1. Secure Signup & Authentication | `POST /api/auth/signup` | ✅ |
+| 2. Login & JWT | `POST /api/auth/login` | ✅ |
+| 3. Article Lifecycle (Author only) | `POST /api/articles`, `GET /api/articles/me`, `PUT /api/articles/:id`, `DELETE /api/articles/:id` | ✅ |
+| 4. Public News Feed (filtering, pagination, exclude deleted) | `GET /api/articles` (published feed) | ✅ |
+| 5. Read Tracking (with spam protection) | `GET /api/feed/:id` | ✅ |
+| 6. Analytics Engine (daily aggregation via Bull queue + cron) | Background job | ✅ |
+| 7. Author Performance Dashboard | `GET /author/dashboard` | ✅ |
+| 8. Author Content List (including drafts) | `GET /api/articles/me` | ✅ |
+
+**Bonus implemented**:
+- Rate limiter (Redis) to prevent refreshing the same article >5 times per 10 seconds.
+- Unit tests structure (mocked database) – ready to expand.
+
+## 🛠️ Setup & Installation
+
+### Prerequisites
+- Node.js (v18+)
+- PostgreSQL (Docker recommended) or local installation
+- Redis (Docker recommended)
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/AbebeTefera/afrolink-news-api.git
+cd afrolink-news-api

@@ -96,7 +96,36 @@ export const updateArticle = async (req: Request, res: Response) => {
     });
   }
 };
-
+export const getArticleByIdForAuthor = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const userId = (req as any).user.id;
+    const article = await prisma.article.findFirst({
+      where: { id: id as string, authorId: userId },
+    });
+    if (!article) {
+      return res.status(404).json({
+        Success: false,
+        Message: 'Article not found',
+        Object: null,
+        Errors: ['Not found or you are not the author'],
+      });
+    }
+    return res.status(200).json({
+      Success: true,
+      Message: 'Article retrieved',
+      Object: article,
+      Errors: null,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      Success: false,
+      Message: 'Failed to fetch article',
+      Object: null,
+      Errors: ['Database error'],
+    });
+  }
+};
 export const deleteArticle = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
